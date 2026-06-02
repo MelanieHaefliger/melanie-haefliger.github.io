@@ -12,24 +12,26 @@ export function Portrait() {
 
   return (
     <div className="relative mx-auto aspect-square w-52 shrink-0 sm:w-64 lg:w-80">
-      {/* warm glow behind the portrait */}
+      {/* soft pulsing teal/turquoise glow behind the portrait */}
       <div
         aria-hidden
-        className="absolute -inset-5 rounded-[2.5rem] bg-accent/20 blur-3xl"
+        className="absolute -inset-6 rounded-full bg-gradient-to-br from-accent/30 to-accent-2/20 blur-3xl motion-safe:animate-[glowpulse_6s_ease-in-out_infinite]"
       />
-      {ok ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src="/portrait.jpg"
-          alt="Melanie Haefliger"
-          onError={() => setOk(false)}
-          className="relative h-full w-full rounded-[2rem] object-cover shadow-xl ring-1 ring-border"
-        />
-      ) : (
-        <div className="relative flex h-full w-full items-center justify-center rounded-[2rem] bg-gradient-to-br from-accent/30 to-accent/5 text-6xl font-semibold text-accent ring-1 ring-border">
-          MH
-        </div>
-      )}
+      <div className="relative motion-safe:animate-[floaty_7s_ease-in-out_infinite]">
+        {ok ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/portrait.jpg"
+            alt="Melanie Haefliger"
+            onError={() => setOk(false)}
+            className="h-full w-full rounded-[2rem] object-cover shadow-xl ring-1 ring-border"
+          />
+        ) : (
+          <div className="flex aspect-square w-full items-center justify-center rounded-[2rem] bg-gradient-to-br from-accent/30 to-accent/5 text-6xl font-semibold text-accent ring-1 ring-border">
+            MH
+          </div>
+        )}
+      </div>
     </div>
   );
 }

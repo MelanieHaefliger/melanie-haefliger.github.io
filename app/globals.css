@@ -8,29 +8,31 @@
    Semantic tokens; values swap between light and dark.
 --------------------------------------------------------------------------- */
 :root {
-  --background: #fbf9f6; /* warm paper */
-  --foreground: #1a1410; /* warm ink */
-  --muted: #6b5f57; /* secondary text */
+  --background: #fff0e4; /* cream (peach-tinted paper) */
+  --foreground: #0e2a28; /* deep teal ink */
+  --muted: #5d6f6d; /* muted teal-gray */
   --card: #ffffff; /* layered surfaces */
-  --subtle: #f4ece5; /* faint fills, chips */
-  --border: #ece2d9;
-  --accent: #f0612e; /* coral */
-  --accent-hover: #d94e1c;
-  --accent-foreground: #ffffff; /* on coral */
-  --ring: #f0612e;
+  --subtle: #ffe0c5; /* peach chips/fills */
+  --border: #f2dcc6; /* warm border */
+  --accent: #007979; /* deep teal */
+  --accent-hover: #006160;
+  --accent-foreground: #ffffff; /* on teal */
+  --accent-2: #24b1b1; /* turquoise (accents, glows) */
+  --ring: #007979;
 }
 
 .dark {
-  --background: #161210; /* warm near-black */
-  --foreground: #f6efe9;
-  --muted: #a89c92;
-  --card: #211b17;
-  --subtle: #1e1814;
-  --border: #322a24;
-  --accent: #fb7c52; /* lighter coral for dark */
-  --accent-hover: #ff936e;
-  --accent-foreground: #1a1410;
-  --ring: #fb7c52;
+  --background: #0a1c1b; /* deep teal-black */
+  --foreground: #f3efe8;
+  --muted: #93a3a1;
+  --card: #102725;
+  --subtle: #122220;
+  --border: #20322f;
+  --accent: #24b1b1; /* turquoise for dark */
+  --accent-hover: #45c7c7;
+  --accent-foreground: #05201f;
+  --accent-2: #2fbfbf;
+  --ring: #24b1b1;
 }
 
 /* Map tokens into Tailwind's theme so utilities like bg-background, text-accent work. */
@@ -44,6 +46,7 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-2: var(--accent-2);
   --color-ring: var(--ring);
 
   --font-sans: var(--font-geist-sans);
@@ -72,6 +75,28 @@
     outline: 2px solid var(--ring);
     outline-offset: 2px;
     border-radius: 2px;
+  }
+}
+
+/* Subtle, grown-up hero motion (not childish). */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes glowpulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
   }
 }
 

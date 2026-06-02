@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ProjectCard } from "@/components/project-card";
-import { MascotPet } from "@/components/mascot";
 
 const helps = [
   {
@@ -162,7 +161,6 @@ export default function Home() {
             </Button>
           </div>
         </Reveal>
-        <MascotPet />
       </Section>
     </>
   );
