@@ -9,8 +9,8 @@ export const site = {
   tagline: "I turn complex workflows into seamless, AI-powered experiences.",
   description:
     "Strategic Product Owner and AI-native builder with 6+ years in hypergrowth SaaS (CSR and travel-tech). I integrate LLMs, Claude Code, and intelligent automations to cut operational overhead and ship experiences people love.",
-  // Update once a custom domain is connected.
-  url: "https://melaniehaefliger.vercel.app",
+  // GitHub Pages project URL. Update if you rename the repo or add a domain.
+  url: "https://melaniehaefliger.github.io/portfolio",
   email: "melany.haefliger@gmail.com",
   links: {
     linkedin: "https://www.linkedin.com/in/melanie-haefliger",

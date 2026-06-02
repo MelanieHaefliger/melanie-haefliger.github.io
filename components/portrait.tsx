@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { asset } from "@/lib/utils";
 
 /**
  * Hero portrait — a background-removed cutout (public/portrait-cutout.png)
@@ -22,7 +23,7 @@ export function Portrait() {
         {ok ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src="/portrait-cutout.png"
+            src={asset("/portrait-cutout.png")}
             alt="Melanie Haefliger"
             onError={() => setOk(false)}
             className="h-full w-full object-cover object-top [mask-image:linear-gradient(to_bottom,black_82%,transparent)]"

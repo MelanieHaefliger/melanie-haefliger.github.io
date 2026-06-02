@@ -28,6 +28,7 @@ const helps = [
 import { projects } from "@/content/projects";
 import { experience, skills } from "@/content/experience";
 import { site } from "@/lib/site";
+import { asset } from "@/lib/utils";
 
 export default function Home() {
   const featured = projects.filter((p) => p.featured);
@@ -93,7 +94,7 @@ export default function Home() {
             </p>
 
             <div className="flex flex-wrap gap-3 pt-2">
-              <Button href={site.cv} external variant="secondary" size="sm">
+              <Button href={asset(site.cv)} external variant="secondary" size="sm">
                 <FileDown className="h-4 w-4" /> Download CV
               </Button>
               <Button href={site.links.linkedin} external variant="ghost" size="sm">
