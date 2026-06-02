@@ -1,0 +1,30 @@
+## Context
+
+Benevity was sunsetting a legacy platform and moving clients to its successor.
+Migrations like this are quietly dangerous: long-standing accounts depend on
+configurations that no one fully remembers, and a bad transition risks churn.
+
+## The problem
+
+30 accounts — a mix of enterprise and mid-market — were exposed. The risk wasn't
+just technical; it was the hidden, undocumented client setups that could break on
+migration and trigger cancellations. Someone had to surface them and make a call.
+
+## What I did
+
+- **Surfaced hidden configurations** by digging into how each account actually
+  used the platform, not just how it was documented.
+- **Ran a structured Go/No-Go risk assessment**, weighing dependencies, client
+  impact, and readiness for each account.
+- **Made and communicated the call** on behalf of my function, keeping leadership
+  aligned on risks and progress throughout.
+
+## Outcome
+
+- **~$200K ARR retained** across the 30 affected accounts.
+- Migration risks identified **early**, before they became cancellations.
+
+## Takeaway
+
+Good migration work is mostly discovery and judgment: find what's hidden, assess
+honestly, and decide with the revenue and the user in mind.

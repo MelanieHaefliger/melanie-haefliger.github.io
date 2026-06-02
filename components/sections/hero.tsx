@@ -29,10 +29,9 @@ export function Hero() {
 
         <Reveal delay={160}>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
-            I&apos;m {site.name} — an AI Product Manager with experience across
-            scale-ups, travel-tech, and employee-engagement platforms. I turn
-            ambiguous problems into automations and interfaces that move real
-            metrics.
+            I&apos;m {site.name} — a Product Owner and AI-native builder with 6+
+            years in hypergrowth SaaS across CSR and travel-tech. I turn complex
+            workflows into automations and experiences that move real metrics.
           </p>
         </Reveal>
 

@@ -37,21 +37,23 @@ export default function Home() {
       </Section>
 
       {/* ── About / experience ────────────────────────────────────────── */}
-      <Section id="about" eyebrow="About" title="An AI PM who ships" className="bg-subtle/40">
+      <Section id="about" eyebrow="About" title="A product builder who ships" className="bg-subtle/40">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <Reveal className="space-y-5 text-base leading-7 text-muted">
             <p>
-              I&apos;m an AI Product Manager with ~3 years building products at
-              scale-ups across travel-tech and employee-engagement. I care most
-              about the unglamorous middle: the messy workflows where good
-              automation and a clearer interface quietly change someone&apos;s day.
+              I&apos;m a Product Owner and AI-native builder with 6+ years in
+              hypergrowth SaaS — across CSR and engagement tech at Benevity and
+              travel-tech at TravelPerk. I care most about the unglamorous middle:
+              the messy workflows where good automation and a clearer interface
+              quietly change someone&apos;s day.
             </p>
             <p>
-              Lately I&apos;ve been going deeper on AI — designing LLM-powered
-              features and building{" "}
-              <span className="font-medium text-foreground">PivotPilot</span>, a
-              copilot for career pivots, end to end. I like owning the whole arc:
-              the problem, the experiment, and the experience that ships.
+              Lately I&apos;ve gone deeper on AI — owning the product behind LLM
+              features like an internal{" "}
+              <span className="font-medium text-foreground">RAG knowledge chatbot</span>,
+              and building my own AI projects hands-on with tools like Claude
+              Code. I like owning the whole arc: the problem, the experiment, and
+              the experience that ships.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-2">

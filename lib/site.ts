@@ -4,11 +4,11 @@
  */
 export const site = {
   name: "Melanie Haefliger",
-  role: "AI Product Manager",
+  role: "Product Owner · AI & Automation",
   // One-line positioning used in the hero and meta description.
-  tagline: "I build AI products that turn messy workflows into experiences people love.",
+  tagline: "I turn complex workflows into seamless, AI-powered experiences.",
   description:
-    "AI Product Manager with experience across scale-ups, travel-tech, and employee-engagement platforms. I ship AI-powered automations and user experiences that move real metrics.",
+    "Strategic Product Owner and AI-native builder with 6+ years in hypergrowth SaaS (CSR and travel-tech). I integrate LLMs, Claude Code, and intelligent automations to cut operational overhead and ship experiences people love.",
   // Update once a custom domain is connected.
   url: "https://melaniehaefliger.vercel.app",
   email: "melany.haefliger@gmail.com",
@@ -18,7 +18,7 @@ export const site = {
   },
   // Where the downloadable CV lives (drop the PDF in /public).
   cv: "/melanie-haefliger-cv.pdf",
-  location: "Europe",
+  location: "Remote · Swiss & EU citizen",
 } as const;
 
 export type Site = typeof site;
