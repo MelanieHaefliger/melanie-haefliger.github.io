@@ -41,7 +41,6 @@ export const projects: Project[] = [
       { label: "Stack", value: "LLM · RAG" },
       { label: "Status", value: "In progress" },
     ],
-    featured: true,
   },
   {
     slug: "workflow-automation",
@@ -58,6 +57,7 @@ export const projects: Project[] = [
       { label: "Users impacted", value: "5,000+" },
       { label: "Staff freed", value: "~15" },
     ],
+    featured: true,
   },
   {
     slug: "ai-knowledge-chatbot",
