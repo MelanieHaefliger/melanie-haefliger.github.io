@@ -85,12 +85,12 @@ export default function Home() {
               quietly change someone&apos;s day.
             </p>
             <p>
-              Lately I&apos;ve gone deeper on AI — owning the product behind LLM
-              features like an internal{" "}
-              <span className="font-medium text-foreground">RAG knowledge chatbot</span>,
-              and building my own AI projects hands-on with tools like Claude
-              Code. I like owning the whole arc: the problem, the experiment, and
-              the experience that ships.
+              Lately I&apos;ve gone deeper on AI — owning the product behind an{" "}
+              <span className="font-medium text-foreground">internal AI knowledge assistant</span>{" "}
+              that answers from a company&apos;s own docs, and building my own AI
+              projects hands-on with tools like Claude Code. I like owning the
+              whole arc: the problem, the experiment, and the experience that
+              ships.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-2">
