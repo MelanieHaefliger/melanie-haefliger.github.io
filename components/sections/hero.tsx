@@ -35,16 +35,16 @@ export function Hero() {
 
             <Reveal delay={150}>
               <p className="mt-5 max-w-xl text-balance text-2xl font-medium leading-snug text-foreground sm:text-3xl">
-                Great products win hearts and fill wallets — let&apos;s make that{" "}
-                <span className="text-accent">magic</span> happen.
+                I build AI products that turn messy workflows into experiences
+                people <span className="text-accent">love</span>.
               </p>
             </Reveal>
 
             <Reveal delay={220}>
               <p className="mt-5 max-w-xl text-base leading-7 text-muted">
                 I&apos;m a Product Owner and AI-native builder with 6+ years in
-                hypergrowth SaaS across CSR and travel-tech. I turn complex
-                workflows into automations and experiences people love.
+                hypergrowth SaaS across CSR and travel-tech — shipping the
+                automations and features that move real metrics.
               </p>
             </Reveal>
 
