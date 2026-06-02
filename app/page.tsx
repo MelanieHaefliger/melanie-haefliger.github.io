@@ -1,11 +1,31 @@
-import { Mail, FileDown } from "lucide-react";
+import { Mail, FileDown, Workflow, TrendingUp, Zap } from "lucide-react";
 import { LinkedInIcon } from "@/components/icons";
 import { Hero } from "@/components/sections/hero";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { ProjectCard } from "@/components/project-card";
+import { MascotPet } from "@/components/mascot";
+
+const helps = [
+  {
+    icon: Workflow,
+    title: "Automate workflows & cut overhead",
+    body: "I map messy, manual processes and replace them with automations and integrations that free up whole teams.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Boost engagement & retention",
+    body: "I ship features and AI experiences that move the metrics that matter — adoption, retention, and revenue.",
+  },
+  {
+    icon: Zap,
+    title: "Streamline ops to save cost & time",
+    body: "I find where time and money leak, then design the simplest change that fixes it — measured, not assumed.",
+  },
+];
 import { projects } from "@/content/projects";
 import { experience, skills } from "@/content/experience";
 import { site } from "@/lib/site";
@@ -17,6 +37,23 @@ export default function Home() {
   return (
     <>
       <Hero />
+
+      {/* ── How I help ────────────────────────────────────────────────── */}
+      <Section eyebrow="How I help companies" title="Value, not just features">
+        <div className="grid gap-5 sm:grid-cols-3">
+          {helps.map((h, i) => (
+            <Reveal key={h.title} delay={i * 80}>
+              <Card className="h-full">
+                <h.icon className="mb-4 h-6 w-6 text-accent" />
+                <h3 className="mb-2 text-lg font-semibold tracking-tight text-foreground">
+                  {h.title}
+                </h3>
+                <p className="text-sm leading-6 text-muted">{h.body}</p>
+              </Card>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
 
       {/* ── Selected work ─────────────────────────────────────────────── */}
       <Section id="work" eyebrow="Selected work" title="Things I've shipped & built">
@@ -125,6 +162,7 @@ export default function Home() {
             </Button>
           </div>
         </Reveal>
+        <MascotPet />
       </Section>
     </>
   );

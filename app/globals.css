@@ -8,29 +8,29 @@
    Semantic tokens; values swap between light and dark.
 --------------------------------------------------------------------------- */
 :root {
-  --background: #f7f8f4; /* cool paper */
-  --foreground: #0e0f0c; /* ink */
-  --muted: #5e6560; /* secondary text */
+  --background: #fbf9f6; /* warm paper */
+  --foreground: #1a1410; /* warm ink */
+  --muted: #6b5f57; /* secondary text */
   --card: #ffffff; /* layered surfaces */
-  --subtle: #edefe8; /* faint fills, chips */
-  --border: #e2e5dc;
-  --accent: #10b981; /* electric mint */
-  --accent-hover: #059669;
-  --accent-foreground: #04130c; /* ink-on-mint */
-  --ring: #10b981;
+  --subtle: #f4ece5; /* faint fills, chips */
+  --border: #ece2d9;
+  --accent: #f0612e; /* coral */
+  --accent-hover: #d94e1c;
+  --accent-foreground: #ffffff; /* on coral */
+  --ring: #f0612e;
 }
 
 .dark {
-  --background: #0a0b0a;
-  --foreground: #f4f6f0;
-  --muted: #9aa39c;
-  --card: #121413;
-  --subtle: #181a18;
-  --border: #242724;
-  --accent: #34d399;
-  --accent-hover: #6ee7b7;
-  --accent-foreground: #04130c;
-  --ring: #34d399;
+  --background: #161210; /* warm near-black */
+  --foreground: #f6efe9;
+  --muted: #a89c92;
+  --card: #211b17;
+  --subtle: #1e1814;
+  --border: #322a24;
+  --accent: #fb7c52; /* lighter coral for dark */
+  --accent-hover: #ff936e;
+  --accent-foreground: #1a1410;
+  --ring: #fb7c52;
 }
 
 /* Map tokens into Tailwind's theme so utilities like bg-background, text-accent work. */
