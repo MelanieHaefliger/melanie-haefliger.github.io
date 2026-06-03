@@ -13,7 +13,7 @@ export function Portrait() {
   const [ok, setOk] = useState(true);
 
   return (
-    <div className="relative mx-auto aspect-square w-60 shrink-0 sm:w-72 lg:w-80">
+    <div className="relative mx-auto aspect-square w-[clamp(12rem,35vw,20rem)] shrink-0">
       {/* soft pulsing teal/turquoise halo */}
       <div
         aria-hidden

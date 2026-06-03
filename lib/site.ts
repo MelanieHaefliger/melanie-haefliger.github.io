@@ -17,7 +17,7 @@ export const site = {
     email: "mailto:melany.haefliger@gmail.com",
   },
   // Where the downloadable CV lives (drop the PDF in /public).
-  cv: "/melanie-haefliger-cv.pdf",
+  cv: "/melanie.haefliger-cv.pdf",
   location: "Remote · Swiss & EU citizen",
 } as const;
 

@@ -41,13 +41,13 @@ export function Nav() {
 
         <nav className="flex items-center gap-1 sm:gap-2">
           {links.map((link) => (
-            <Link
+            <a
               key={link.href}
               href={link.href}
               className="rounded-md px-3 py-2 text-sm text-muted transition-colors hover:text-foreground"
             >
               {link.label}
-            </Link>
+            </a>
           ))}
           <span className="ml-1">
             <ThemeToggle />

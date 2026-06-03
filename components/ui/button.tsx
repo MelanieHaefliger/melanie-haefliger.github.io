@@ -49,6 +49,10 @@ export function Button({
         />
       );
     }
+    // In-page anchors: native <a> scrolls reliably (App Router <Link> often won't).
+    if (href.startsWith("#")) {
+      return <a href={href} className={classes} {...(props as ComponentProps<"a">)} />;
+    }
     return <Link href={href} className={classes} {...(props as ComponentProps<"a">)} />;
   }
 

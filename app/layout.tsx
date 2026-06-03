@@ -35,6 +35,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.name }],
   creator: site.name,
+  icons: {
+    icon: [{ url: `${site.url}/portrait-cutout.png`, type: "image/png" }],
+    apple: `${site.url}/portrait-cutout.png`,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -42,11 +46,20 @@ export const metadata: Metadata = {
     title: `${site.name} — ${site.role}`,
     description: site.description,
     siteName: site.name,
+    images: [
+      {
+        url: `${site.url}/portrait.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `${site.name} — ${site.role}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} — ${site.role}`,
     description: site.description,
+    images: [`${site.url}/portrait.jpg`],
   },
   robots: { index: true, follow: true },
 };
@@ -63,7 +76,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light">
           <Nav />
           <main className="flex-1">{children}</main>
           <Footer />

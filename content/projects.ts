@@ -3,9 +3,6 @@
  * ─────────────────────────────────────────────────────────────────────────
  * This drives the "Selected work" cards and each case-study page header.
  * The long-form body for each lives in content/case-studies/<slug>.mdx.
- *
- * Metrics and stories below are taken from Melanie's CV. The PivotPilot entry
- * is a placeholder to be filled in with real details.
  */
 
 export type Metric = { label: string; value: string };
@@ -22,26 +19,12 @@ export type Project = {
   metrics: Metric[];
   featured?: boolean;
   anonymized?: boolean;
+  placeholder?: boolean;
   /** Optional outbound link (live product, waitlist, etc.). */
   externalUrl?: string;
 };
 
 export const projects: Project[] = [
-  {
-    slug: "pivotpilot",
-    title: "PivotPilot",
-    tagline: "A personal AI project — an LLM-powered copilot built end to end.",
-    role: "Founder & Product Lead",
-    period: "2025 — present",
-    summary:
-      "My personal AI build: designing and shipping an LLM-powered product solo — owning problem, UX, retrieval architecture, and go-to-market. (Details to be finalised.)",
-    tags: ["AI / LLM", "0→1 Product", "RAG", "UX"],
-    metrics: [
-      { label: "Role", value: "Solo build" },
-      { label: "Stack", value: "LLM · RAG" },
-      { label: "Status", value: "In progress" },
-    ],
-  },
   {
     slug: "workflow-automation",
     title: "Automating a core user workflow",
@@ -104,6 +87,18 @@ export const projects: Project[] = [
       { label: "Focus", value: "Research → PRD" },
     ],
     externalUrl: "https://shehub.es",
+  },
+  {
+    slug: "coming-soon",
+    title: "Coming soon",
+    tagline: "New project in the works.",
+    role: "TBD",
+    period: "TBD",
+    summary:
+      "Details are being finalised. Stay tuned for the full case study.",
+    tags: ["TBD"],
+    metrics: [],
+    placeholder: true,
   },
 ];
 

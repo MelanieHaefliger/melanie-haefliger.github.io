@@ -33,11 +33,37 @@ export default async function CaseStudyPage({
   const project = getProject(slug);
   if (!project) notFound();
 
+  if (project.placeholder) {
+    return (
+      <article className="py-16 sm:py-24">
+        <Container className="max-w-3xl px-6 sm:px-8">
+          <Link
+            href="/#work"
+            className="mb-10 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-accent"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to work
+          </Link>
+          <header className="mb-12">
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-accent">
+              In progress
+            </p>
+            <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+              {project.title}
+            </h1>
+            <p className="mt-4 text-lg leading-8 text-muted">
+              Details are being finalised. Come back soon for the full case study.
+            </p>
+          </header>
+        </Container>
+      </article>
+    );
+  }
+
   const { default: Body } = await import(`@/content/case-studies/${slug}.mdx`);
 
   return (
     <article className="py-16 sm:py-24">
-      <Container className="max-w-3xl">
+      <Container className="max-w-3xl px-6 sm:px-8">
         <Link
           href="/#work"
           className="mb-10 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-accent"

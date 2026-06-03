@@ -1,4 +1,4 @@
-import { Mail, FileDown, Workflow, TrendingUp, Zap } from "lucide-react";
+import { Mail, FileDown, Workflow, TrendingUp, Zap, ArrowUpRight } from "lucide-react";
 import { LinkedInIcon } from "@/components/icons";
 import { Hero } from "@/components/sections/hero";
 import { Section } from "@/components/ui/section";
@@ -11,7 +11,7 @@ import { ProjectCard } from "@/components/project-card";
 const helps = [
   {
     icon: Workflow,
-    title: "Automate workflows & cut overhead",
+    title: "Automate workflows & free up your team",
     body: "I map messy, manual processes and replace them with automations and integrations that free up whole teams.",
   },
   {
@@ -45,10 +45,10 @@ export default function Home() {
             <Reveal key={h.title} delay={i * 80}>
               <Card className="h-full">
                 <h.icon className="mb-4 h-6 w-6 text-accent" />
-                <h3 className="mb-2 text-lg font-semibold tracking-tight text-foreground">
+                <h3 className="mb-2 min-h-[3.5rem] text-lg font-semibold tracking-tight text-foreground sm:min-h-[3rem]">
                   {h.title}
                 </h3>
-                <p className="text-sm leading-6 text-muted">{h.body}</p>
+                <p className="text-base leading-6 text-muted">{h.body}</p>
               </Card>
             </Reveal>
           ))}
@@ -74,9 +74,9 @@ export default function Home() {
       </Section>
 
       {/* ── About / experience ────────────────────────────────────────── */}
-      <Section id="about" eyebrow="About" title="A product builder who ships" className="bg-subtle/40">
+      <Section id="about" eyebrow="About" title="I build products that reduce friction, drive engagement, and scale" className="bg-subtle/40">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal className="space-y-5 text-base leading-7 text-muted">
+          <Reveal className="space-y-5 text-lg leading-8 text-muted">
             <p>
               I&apos;m a Product Owner and AI-native builder with 6+ years in
               hypergrowth SaaS — across CSR and engagement tech at Benevity and
@@ -85,12 +85,7 @@ export default function Home() {
               quietly change someone&apos;s day.
             </p>
             <p>
-              Lately I&apos;ve gone deeper on AI — owning the product behind an{" "}
-              <span className="font-medium text-foreground">internal AI knowledge assistant</span>{" "}
-              that answers from a company&apos;s own docs, and building my own AI
-              projects hands-on with tools like Claude Code. I like owning the
-              whole arc: the problem, the experiment, and the experience that
-              ships.
+              I work best with autonomy and trust — given space, I take full ownership from problem to outcome. In a team I&apos;m the person who keeps an eye on the bigger picture, brings conversations back on track when they drift, and says something early if I sense something is off. I care about the environment as much as the output: respectful, honest, and occasionally fun.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-2">
@@ -125,13 +120,24 @@ export default function Home() {
             <Reveal key={role.company + role.period} delay={i * 70}>
               <div className="grid gap-2 border-t border-border pt-6 sm:grid-cols-[200px_1fr]">
                 <div>
-                  <p className="font-medium text-foreground">{role.company}</p>
+                  <p className="font-medium text-foreground">
+                    {role.companyUrl ? (
+                      <a href={role.companyUrl} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-accent">
+                        {role.company} <ArrowUpRight className="inline h-3 w-3" />
+                      </a>
+                    ) : (
+                      role.company
+                    )}
+                  </p>
                   <p className="text-sm text-muted">{role.period}</p>
-                  <p className="mt-1 font-mono text-xs text-muted">{role.context}</p>
+                  <p className="mt-1 font-mono text-sm text-muted">{role.context}</p>
+                  {role.remote && (
+                    <p className="mt-0.5 font-mono text-sm text-muted">&middot; Remote</p>
+                  )}
                 </div>
                 <div>
                   <p className="mb-2 font-medium text-foreground">{role.title}</p>
-                  <ul className="space-y-1.5 text-sm leading-6 text-muted">
+                  <ul className="space-y-1.5 text-base leading-6 text-muted">
                     {role.highlights.map((h) => (
                       <li key={h} className="flex gap-2">
                         <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
