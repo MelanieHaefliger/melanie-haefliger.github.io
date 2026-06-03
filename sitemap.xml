@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://melaniehaefliger.github.io/portfolio</loc>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://melaniehaefliger.github.io/portfolio/work/workflow-automation</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://melaniehaefliger.github.io/portfolio/work/ai-knowledge-chatbot</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://melaniehaefliger.github.io/portfolio/work/platform-migration</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://melaniehaefliger.github.io/portfolio/work/shehub</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://melaniehaefliger.github.io/portfolio/work/coming-soon</loc>
+<priority>0.8</priority>
+</url>
+</urlset>
