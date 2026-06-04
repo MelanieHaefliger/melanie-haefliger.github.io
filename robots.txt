@@ -1,4 +1,4 @@
 User-Agent: *
 Allow: /
 
-Sitemap: https://melaniehaefliger.github.io/portfolio/sitemap.xml
+Sitemap: https://melaniehaefliger.github.io/melanie-haefliger.github.io/sitemap.xml
