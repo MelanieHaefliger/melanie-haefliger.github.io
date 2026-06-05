@@ -1,2 +1,2 @@
-:HL["/melanie-haefliger.github.io/_next/static/chunks/1at29wvtymoy4.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"d0W0bJDtO9QHyjcYY2gQP"}
+:HL["/melanie-haefliger.github.io/_next/static/chunks/2vlu6-h_y6gop.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"Y-JrCo-0cpvVzPKKGNwrK"}

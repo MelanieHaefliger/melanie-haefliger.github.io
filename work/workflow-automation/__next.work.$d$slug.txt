@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-2:I[39756,["/melanie-haefliger.github.io/_next/static/chunks/378q7ozsevrph.js","/melanie-haefliger.github.io/_next/static/chunks/14mrh2-p_w84d.js","/melanie-haefliger.github.io/_next/static/chunks/3atk4zhsnuu-5.js"],"default"]
-3:I[37457,["/melanie-haefliger.github.io/_next/static/chunks/378q7ozsevrph.js","/melanie-haefliger.github.io/_next/static/chunks/14mrh2-p_w84d.js","/melanie-haefliger.github.io/_next/static/chunks/3atk4zhsnuu-5.js"],"default"]
+2:I[39756,["/melanie-haefliger.github.io/_next/static/chunks/1vngr0n7c2crr.js","/melanie-haefliger.github.io/_next/static/chunks/14mrh2-p_w84d.js","/melanie-haefliger.github.io/_next/static/chunks/3-09ge2q6g78a.js"],"default"]
+3:I[37457,["/melanie-haefliger.github.io/_next/static/chunks/1vngr0n7c2crr.js","/melanie-haefliger.github.io/_next/static/chunks/14mrh2-p_w84d.js","/melanie-haefliger.github.io/_next/static/chunks/3-09ge2q6g78a.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"d0W0bJDtO9QHyjcYY2gQP"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"Y-JrCo-0cpvVzPKKGNwrK"}
