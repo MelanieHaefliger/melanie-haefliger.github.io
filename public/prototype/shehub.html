@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SheHub Admin — Internal tool prototype</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    /* Views hidden via inline style in HTML; JS controls visibility */
+    .nav-item { transition: background 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.09); }
+    .nav-item.active { background: rgba(255,255,255,0.13); }
+    .card { transition: box-shadow 0.2s, transform 0.2s; }
+    .card:hover { box-shadow: 0 4px 20px rgba(124,58,237,0.10); transform: translateY(-1px); }
+    .btn-primary { transition: background 0.15s, box-shadow 0.15s; }
+    .btn-primary:hover { background: #6d28d9; box-shadow: 0 4px 14px rgba(124,58,237,0.35); }
+    .btn-secondary { transition: background 0.15s; }
+    .btn-secondary:hover { background: #ede9fe; }
+    .row-hover:hover { background: #faf5ff; }
+    .role-slot { transition: all 0.2s; }
+    .kanban-card { transition: box-shadow 0.2s, transform 0.2s; }
+    .kanban-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.09); transform: translateY(-2px); }
+    .badge-new { background: #eff6ff; color: #1d4ed8; }
+    .badge-shortlisted { background: #fefce8; color: #a16207; }
+    .badge-matched { background: #f0fdf4; color: #15803d; }
+    .badge-rejected { background: #fef2f2; color: #b91c1c; }
+    .status-dot-new { background: #3b82f6; }
+    .status-dot-shortlisted { background: #eab308; }
+    .status-dot-matched { background: #22c55e; }
+    .prototype-banner { background: linear-gradient(135deg, #7c3aed, #4f46e5); }
+  </style>
+</head>
+<body class="bg-[#f5f3ff] h-screen flex flex-col overflow-hidden text-gray-800">
+
+  <!-- Prototype banner -->
+  <div class="prototype-banner flex-shrink-0 flex items-center justify-center gap-2 py-1.5 text-white text-xs">
+    <svg class="w-3.5 h-3.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span>Prototype — SheHub Admin Tool · built by Melanie Haefliger, PM</span>
+    <span style="opacity:0.5">·</span>
+    <span style="opacity:0.75; font-style:italic">anonymized &amp; simplified for portfolio</span>
+  </div>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-56 bg-[#1a1740] text-white flex-shrink-0 flex flex-col shadow-xl">
+      <!-- Logo -->
+      <div class="px-5 py-5 border-b border-white/10">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-violet-500 flex items-center justify-center text-sm font-bold shadow-md">S</div>
+          <div>
+            <p class="font-semibold text-sm leading-tight">SheHub</p>
+            <p class="text-[10px] text-white/45 leading-tight">Admin console</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+        <button onclick="showView('dashboard')" data-nav="dashboard"
+          class="nav-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/90 cursor-pointer">
+          <svg class="w-4 h-4 shrink-0 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          Dashboard
+        </button>
+        <button onclick="showView('applicants')" data-nav="applicants"
+          class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 cursor-pointer">
+          <svg class="w-4 h-4 shrink-0 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Applicants
+          <span class="ml-auto text-[10px] bg-violet-500/30 text-violet-200 px-1.5 py-0.5 rounded-full">12</span>
+        </button>
+        <button onclick="showView('projects')" data-nav="projects"
+          class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 cursor-pointer">
+          <svg class="w-4 h-4 shrink-0 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          Projects & Roles
+          <span class="ml-auto text-[10px] bg-violet-500/30 text-violet-200 px-1.5 py-0.5 rounded-full">4</span>
+        </button>
+        <button onclick="showView('pipeline')" data-nav="pipeline"
+          class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 cursor-pointer">
+          <svg class="w-4 h-4 shrink-0 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+          Pipeline
+        </button>
+
+        <div class="pt-3 pb-1 px-3">
+          <p class="text-[10px] uppercase tracking-widest text-white/30 font-medium">Automation</p>
+        </div>
+        <button onclick="showView('automations')" data-nav="automations"
+          class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 cursor-pointer">
+          <svg class="w-4 h-4 shrink-0 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Automated Actions
+        </button>
+        <button class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 cursor-pointer opacity-50">
+          <svg class="w-4 h-4 shrink-0 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Settings
+        </button>
+      </nav>
+
+      <!-- User -->
+      <div class="px-4 py-4 border-t border-white/10">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-full bg-violet-400 flex items-center justify-center text-xs font-bold text-white">MH</div>
+          <div class="min-w-0">
+            <p class="text-xs font-medium text-white/90 truncate">Melanie H.</p>
+            <p class="text-[10px] text-white/40 truncate">Admin</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+
+      <!-- ── DASHBOARD ───────────────────────────────────────────── -->
+      <div data-view="dashboard" class="overflow-y-auto p-8" style="display:block;flex:1;overflow-y:auto">
+        <div class="max-w-5xl mx-auto">
+          <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+            <p class="text-sm text-gray-500 mt-1">SheHub community — week of 17 Jun 2026</p>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Total applicants</p>
+              <p class="text-3xl font-bold text-gray-900 mt-1">28</p>
+              <p class="text-xs text-green-600 mt-1">↑ 4 this week</p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Pending review</p>
+              <p class="text-3xl font-bold text-blue-600 mt-1">12</p>
+              <p class="text-xs text-gray-400 mt-1">Awaiting shortlist decision</p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Matched</p>
+              <p class="text-3xl font-bold text-green-600 mt-1">8</p>
+              <p class="text-xs text-gray-400 mt-1">Across 3 projects</p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Open roles</p>
+              <p class="text-3xl font-bold text-violet-600 mt-1">7</p>
+              <p class="text-xs text-gray-400 mt-1">Across 4 active projects</p>
+            </div>
+          </div>
+
+          <!-- Automated actions log -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+            <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between">
+              <h2 class="font-semibold text-gray-800">Recent automated actions</h2>
+              <span class="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full font-medium">● All systems running</span>
+            </div>
+            <div class="divide-y divide-gray-50">
+              <div class="px-6 py-3 flex items-center gap-3 text-sm">
+                <span class="w-7 h-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs">✓</span>
+                <span class="text-gray-600">Welcome email sent to <strong>Ana García</strong></span>
+                <span class="ml-auto text-xs text-gray-400">2 min ago</span>
+              </div>
+              <div class="px-6 py-3 flex items-center gap-3 text-sm">
+                <span class="w-7 h-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs">✓</span>
+                <span class="text-gray-600">Onboarding checklist sent to <strong>Carmen Rodríguez</strong> (matched)</span>
+                <span class="ml-auto text-xs text-gray-400">1 hr ago</span>
+              </div>
+              <div class="px-6 py-3 flex items-center gap-3 text-sm">
+                <span class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs">→</span>
+                <span class="text-gray-600">Slack channel <code class="text-xs bg-gray-100 px-1 rounded">#proj-ai-tool</code> access granted to <strong>Isabel Martínez</strong></span>
+                <span class="ml-auto text-xs text-gray-400">3 hr ago</span>
+              </div>
+              <div class="px-6 py-3 flex items-center gap-3 text-sm">
+                <span class="w-7 h-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs">✓</span>
+                <span class="text-gray-600">Rejection email sent to <strong>Claudia Jiménez</strong> with feedback</span>
+                <span class="ml-auto text-xs text-gray-400">Yesterday</span>
+              </div>
+              <div class="px-6 py-3 flex items-center gap-3 text-sm">
+                <span class="w-7 h-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs">✓</span>
+                <span class="text-gray-600">Airtable record updated for <strong>AI Assistant Tool</strong> — 1 role filled</span>
+                <span class="ml-auto text-xs text-gray-400">Yesterday</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projects overview -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-50">
+              <h2 class="font-semibold text-gray-800">Active projects at a glance</h2>
+            </div>
+            <div class="divide-y divide-gray-50">
+              <div class="px-6 py-4 flex items-center gap-4">
+                <div class="w-9 h-9 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center font-bold text-sm flex-shrink-0">AI</div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-medium text-gray-800 text-sm">AI Assistant Tool</p>
+                  <div class="flex gap-1 mt-1">
+                    <span class="h-1.5 w-10 rounded-full bg-violet-500"></span>
+                    <span class="h-1.5 w-10 rounded-full bg-violet-200"></span>
+                    <span class="h-1.5 w-10 rounded-full bg-gray-200"></span>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-400">2/3 roles filled</span>
+                <span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-medium">1 open</span>
+              </div>
+              <div class="px-6 py-4 flex items-center gap-4">
+                <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm flex-shrink-0">CP</div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-medium text-gray-800 text-sm">Community Platform 2.0</p>
+                  <div class="flex gap-1 mt-1">
+                    <span class="h-1.5 w-10 rounded-full bg-blue-500"></span>
+                    <span class="h-1.5 w-10 rounded-full bg-blue-500"></span>
+                    <span class="h-1.5 w-10 rounded-full bg-blue-500"></span>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-400">3/3 roles filled</span>
+                <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">Full</span>
+              </div>
+              <div class="px-6 py-4 flex items-center gap-4">
+                <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm flex-shrink-0">DV</div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-medium text-gray-800 text-sm">Data Visualization</p>
+                  <div class="flex gap-1 mt-1">
+                    <span class="h-1.5 w-10 rounded-full bg-orange-500"></span>
+                    <span class="h-1.5 w-10 rounded-full bg-gray-200"></span>
+                    <span class="h-1.5 w-10 rounded-full bg-gray-200"></span>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-400">1/3 roles filled</span>
+                <span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-medium">2 open</span>
+              </div>
+              <div class="px-6 py-4 flex items-center gap-4">
+                <div class="w-9 h-9 rounded-xl bg-green-100 text-green-700 flex items-center justify-center font-bold text-sm flex-shrink-0">AD</div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-medium text-gray-800 text-sm">Analytics Dashboard</p>
+                  <div class="flex gap-1 mt-1">
+                    <span class="h-1.5 w-10 rounded-full bg-green-500"></span>
+                    <span class="h-1.5 w-10 rounded-full bg-gray-200"></span>
+                    <span class="h-1.5 w-10 rounded-full bg-gray-200"></span>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-400">1/3 roles filled</span>
+                <span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-medium">2 open</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── APPLICANTS ──────────────────────────────────────────── -->
+      <div data-view="applicants" class="flex-col overflow-hidden" style="display:none;flex:1">
+        <!-- Header -->
+        <div class="bg-white border-b border-gray-100 px-8 py-5 flex-shrink-0 flex items-center justify-between">
+          <div>
+            <h1 class="text-xl font-bold text-gray-900">Applicants</h1>
+            <p class="text-sm text-gray-400 mt-0.5">28 total · 12 awaiting review</p>
+          </div>
+          <button class="btn-primary text-white text-sm font-medium px-4 py-2 rounded-xl" style="background:#7c3aed">
+            + Add applicant
+          </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white border-b border-gray-100 px-8 py-3 flex-shrink-0 flex items-center gap-3">
+          <input type="search" placeholder="Search applicants…" class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 w-56 focus:outline-none focus:ring-2 focus:ring-violet-300" />
+          <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none">
+            <option>All statuses</option>
+            <option>New</option>
+            <option>Shortlisted</option>
+            <option>Matched</option>
+            <option>Rejected</option>
+          </select>
+          <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none">
+            <option>All projects</option>
+            <option>AI Assistant Tool</option>
+            <option>Community Platform 2.0</option>
+            <option>Data Visualization</option>
+            <option>Analytics Dashboard</option>
+          </select>
+        </div>
+
+        <!-- Table -->
+        <div class="flex-1 overflow-y-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-white border-b border-gray-100 sticky top-0 z-10">
+              <tr>
+                <th class="text-left px-8 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Applicant</th>
+                <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Role</th>
+                <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Project</th>
+                <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Applied</th>
+                <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Status</th>
+                <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide"></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+              <!-- Row template: Avatar | Name + email | Role | Project | Date | Status badge | Actions -->
+              <tr class="row-hover bg-white">
+                <td class="px-8 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center text-xs font-bold flex-shrink-0">AG</div>
+                    <div><p class="font-medium text-gray-900">Ana García</p><p class="text-xs text-gray-400">ana.garcia@email.com</p></div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 text-gray-600">Frontend Dev</td>
+                <td class="px-4 py-3.5"><span class="text-xs bg-violet-50 text-violet-700 px-2 py-1 rounded-full">AI Assistant Tool</span></td>
+                <td class="px-4 py-3.5 text-gray-400 text-xs">Jun 15</td>
+                <td class="px-4 py-3.5"><span class="badge-shortlisted text-xs px-2.5 py-1 rounded-full font-medium">Shortlisted</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="flex gap-2">
+                    <button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>
+                    <button onclick="matchApplicant(this)" class="text-xs text-green-700 px-3 py-1.5 rounded-lg border border-green-200 bg-green-50 hover:bg-green-100 font-medium transition-colors">Match →</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="row-hover bg-white">
+                <td class="px-8 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold flex-shrink-0">ML</div>
+                    <div><p class="font-medium text-gray-900">María López</p><p class="text-xs text-gray-400">m.lopez@designlab.es</p></div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 text-gray-600">UI/UX Designer</td>
+                <td class="px-4 py-3.5"><span class="text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded-full">Data Visualization</span></td>
+                <td class="px-4 py-3.5 text-gray-400 text-xs">Jun 16</td>
+                <td class="px-4 py-3.5"><span class="badge-new text-xs px-2.5 py-1 rounded-full font-medium">New</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="flex gap-2">
+                    <button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>
+                    <button onclick="shortlistApplicant(this)" class="text-xs text-amber-700 px-3 py-1.5 rounded-lg border border-amber-200 bg-amber-50 hover:bg-amber-100 font-medium transition-colors">Shortlist</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="row-hover bg-white">
+                <td class="px-8 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold flex-shrink-0">CR</div>
+                    <div><p class="font-medium text-gray-900">Carmen Rodríguez</p><p class="text-xs text-gray-400">c.rodriguez@pm.io</p></div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 text-gray-600">Product Manager</td>
+                <td class="px-4 py-3.5"><span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full">Community Platform</span></td>
+                <td class="px-4 py-3.5 text-gray-400 text-xs">Jun 14</td>
+                <td class="px-4 py-3.5"><span class="badge-matched text-xs px-2.5 py-1 rounded-full font-medium">Matched ✓</span></td>
+                <td class="px-4 py-3.5">
+                  <button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>
+                </td>
+              </tr>
+              <tr class="row-hover bg-white">
+                <td class="px-8 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xs font-bold flex-shrink-0">IM</div>
+                    <div><p class="font-medium text-gray-900">Isabel Martínez</p><p class="text-xs text-gray-400">isabel.m@dev.com</p></div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 text-gray-600">Backend Dev</td>
+                <td class="px-4 py-3.5"><span class="text-xs bg-violet-50 text-violet-700 px-2 py-1 rounded-full">AI Assistant Tool</span></td>
+                <td class="px-4 py-3.5 text-gray-400 text-xs">Jun 17</td>
+                <td class="px-4 py-3.5"><span class="badge-shortlisted text-xs px-2.5 py-1 rounded-full font-medium">Shortlisted</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="flex gap-2">
+                    <button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>
+                    <button onclick="matchApplicant(this)" class="text-xs text-green-700 px-3 py-1.5 rounded-lg border border-green-200 bg-green-50 hover:bg-green-100 font-medium transition-colors">Match →</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="row-hover bg-white">
+                <td class="px-8 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-bold flex-shrink-0">LS</div>
+                    <div><p class="font-medium text-gray-900">Laura Sánchez</p><p class="text-xs text-gray-400">laura.s@datalab.es</p></div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 text-gray-600">Data Analyst</td>
+                <td class="px-4 py-3.5"><span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full">Analytics Dashboard</span></td>
+                <td class="px-4 py-3.5 text-gray-400 text-xs">Jun 18</td>
+                <td class="px-4 py-3.5"><span class="badge-new text-xs px-2.5 py-1 rounded-full font-medium">New</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="flex gap-2">
+                    <button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>
+                    <button onclick="shortlistApplicant(this)" class="text-xs text-amber-700 px-3 py-1.5 rounded-lg border border-amber-200 bg-amber-50 hover:bg-amber-100 font-medium transition-colors">Shortlist</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="row-hover bg-white">
+                <td class="px-8 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center text-xs font-bold flex-shrink-0">SH</div>
+                    <div><p class="font-medium text-gray-900">Sofía Hernández</p><p class="text-xs text-gray-400">sofia.h@techcomm.io</p></div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 text-gray-600">DevRel</td>
+                <td class="px-4 py-3.5"><span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full">Community Platform</span></td>
+                <td class="px-4 py-3.5 text-gray-400 text-xs">Jun 12</td>
+                <td class="px-4 py-3.5"><span class="badge-new text-xs px-2.5 py-1 rounded-full font-medium">New</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="flex gap-2">
+                    <button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>
+                    <button onclick="shortlistApplicant(this)" class="text-xs text-amber-700 px-3 py-1.5 rounded-lg border border-amber-200 bg-amber-50 hover:bg-amber-100 font-medium transition-colors">Shortlist</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="row-hover bg-white">
+                <td class="px-8 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold flex-shrink-0">AR</div>
+                    <div><p class="font-medium text-gray-900">Alejandra Ruiz</p><p class="text-xs text-gray-400">a.ruiz@frontend.dev</p></div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 text-gray-600">Frontend Dev</td>
+                <td class="px-4 py-3.5"><span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full">Community Platform</span></td>
+                <td class="px-4 py-3.5 text-gray-400 text-xs">Jun 11</td>
+                <td class="px-4 py-3.5"><span class="badge-shortlisted text-xs px-2.5 py-1 rounded-full font-medium">Shortlisted</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="flex gap-2">
+                    <button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>
+                    <button onclick="matchApplicant(this)" class="text-xs text-green-700 px-3 py-1.5 rounded-lg border border-green-200 bg-green-50 hover:bg-green-100 font-medium transition-colors">Match →</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="row-hover bg-white">
+                <td class="px-8 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs font-bold flex-shrink-0">CJ</div>
+                    <div><p class="font-medium text-gray-900">Claudia Jiménez</p><p class="text-xs text-gray-400">c.jimenez@backend.es</p></div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 text-gray-600">Backend Dev</td>
+                <td class="px-4 py-3.5"><span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full">Analytics Dashboard</span></td>
+                <td class="px-4 py-3.5 text-gray-400 text-xs">Jun 10</td>
+                <td class="px-4 py-3.5"><span class="badge-rejected text-xs px-2.5 py-1 rounded-full font-medium">Rejected</span></td>
+                <td class="px-4 py-3.5">
+                  <button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── PROJECTS & ROLES ────────────────────────────────────── -->
+      <div data-view="projects" class="flex-col overflow-hidden" style="display:none;flex:1">
+        <div class="bg-white border-b border-gray-100 px-8 py-5 flex-shrink-0 flex items-center justify-between">
+          <div>
+            <h1 class="text-xl font-bold text-gray-900">Projects & Roles</h1>
+            <p class="text-sm text-gray-400 mt-0.5">4 active projects · 7 open roles</p>
+          </div>
+          <button onclick="showCreateProject()" class="btn-primary text-white text-sm font-medium px-4 py-2 rounded-xl" style="background:#7c3aed">
+            + New project
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-8">
+          <div class="max-w-5xl mx-auto grid grid-cols-2 gap-5">
+
+            <!-- Project card 1 -->
+            <div class="card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-6">
+                <div class="flex items-start gap-4 mb-4">
+                  <div class="w-11 h-11 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center font-bold flex-shrink-0">AI</div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-semibold text-gray-900">AI Assistant Tool</h3>
+                      <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">Active</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-0.5">Building a coding assistant for beginners in the SheHub community</p>
+                  </div>
+                </div>
+                <div class="space-y-2 mb-4">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Role slots</p>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Frontend Developer</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md bg-violet-500 text-white text-xs flex items-center justify-center font-bold" title="Filled">✓</span>
+                      <span class="w-6 h-6 rounded-md border-2 border-dashed border-violet-300 text-violet-300 text-xs flex items-center justify-center" title="Open">+</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Backend Developer</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md border-2 border-dashed border-violet-300 text-violet-300 text-xs flex items-center justify-center" title="Open">+</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Product Manager</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md bg-violet-500 text-white text-xs flex items-center justify-center font-bold" title="Filled">✓</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                  <span class="text-xs text-gray-400">6 applicants</span>
+                  <button onclick="showView('applicants')" class="text-xs text-violet-600 font-medium hover:underline">View applicants →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project card 2 -->
+            <div class="card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-6">
+                <div class="flex items-start gap-4 mb-4">
+                  <div class="w-11 h-11 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold flex-shrink-0 text-xs">CP</div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-semibold text-gray-900">Community Platform 2.0</h3>
+                      <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">Active</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-0.5">New features and improvements for the main shehub.es platform</p>
+                  </div>
+                </div>
+                <div class="space-y-2 mb-4">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Role slots</p>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Frontend Developer</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md bg-blue-500 text-white text-xs flex items-center justify-center font-bold">✓</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Product Manager</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md bg-blue-500 text-white text-xs flex items-center justify-center font-bold">✓</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">DevRel / Community</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md bg-blue-500 text-white text-xs flex items-center justify-center font-bold">✓</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                  <span class="text-xs text-gray-400">5 applicants</span>
+                  <span class="text-xs text-green-600 font-medium">All roles filled ✓</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project card 3 -->
+            <div class="card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-6">
+                <div class="flex items-start gap-4 mb-4">
+                  <div class="w-11 h-11 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold flex-shrink-0 text-xs">DV</div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-semibold text-gray-900">Data Visualization</h3>
+                      <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">Active</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-0.5">Making SheHub's community impact and growth visible with data</p>
+                  </div>
+                </div>
+                <div class="space-y-2 mb-4">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Role slots</p>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Data Analyst</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md bg-orange-500 text-white text-xs flex items-center justify-center font-bold">✓</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Frontend Developer</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md border-2 border-dashed border-orange-300 text-orange-300 text-xs flex items-center justify-center">+</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">UI/UX Designer</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md border-2 border-dashed border-orange-300 text-orange-300 text-xs flex items-center justify-center">+</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                  <span class="text-xs text-gray-400">3 applicants</span>
+                  <button onclick="showView('applicants')" class="text-xs text-violet-600 font-medium hover:underline">View applicants →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project card 4 + Create new -->
+            <div class="card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div class="p-6">
+                <div class="flex items-start gap-4 mb-4">
+                  <div class="w-11 h-11 rounded-xl bg-green-100 text-green-700 flex items-center justify-center font-bold flex-shrink-0 text-xs">AD</div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-semibold text-gray-900">Analytics Dashboard</h3>
+                      <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">Active</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-0.5">Internal metrics dashboard for the SheHub team and stakeholders</p>
+                  </div>
+                </div>
+                <div class="space-y-2 mb-4">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Role slots</p>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Data Analyst</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md bg-green-500 text-white text-xs flex items-center justify-center font-bold">✓</span>
+                      <span class="w-6 h-6 rounded-md border-2 border-dashed border-green-300 text-green-300 text-xs flex items-center justify-center">+</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">Backend Developer</span>
+                    <div class="flex gap-1.5">
+                      <span class="w-6 h-6 rounded-md border-2 border-dashed border-green-300 text-green-300 text-xs flex items-center justify-center">+</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                  <span class="text-xs text-gray-400">3 applicants</span>
+                  <button onclick="showView('applicants')" class="text-xs text-violet-600 font-medium hover:underline">View applicants →</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PIPELINE ────────────────────────────────────────────── -->
+      <div data-view="pipeline" class="flex-col overflow-hidden" style="display:none;flex:1">
+        <div class="bg-white border-b border-gray-100 px-8 py-5 flex-shrink-0">
+          <h1 class="text-xl font-bold text-gray-900">Candidate Pipeline</h1>
+          <p class="text-sm text-gray-400 mt-0.5">Drag cards to move candidates through stages</p>
+        </div>
+        <div class="flex-1 overflow-x-auto overflow-y-hidden p-8">
+          <div class="flex gap-5 h-full min-w-max">
+
+            <!-- Applied column -->
+            <div class="w-64 flex flex-col">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="status-dot-new w-2 h-2 rounded-full"></div>
+                  <p class="text-sm font-semibold text-gray-700">Applied</p>
+                </div>
+                <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium">8</span>
+              </div>
+              <div class="flex-1 overflow-y-auto space-y-2.5">
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center flex-shrink-0">ML</div>
+                    <div><p class="text-sm font-medium text-gray-900">María López</p><p class="text-xs text-gray-400">UI/UX Designer</p></div>
+                  </div>
+                  <span class="text-xs bg-orange-50 text-orange-700 px-2 py-0.5 rounded-full">Data Visualization</span>
+                </div>
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-teal-100 text-teal-700 text-xs font-bold flex items-center justify-center flex-shrink-0">LS</div>
+                    <div><p class="text-sm font-medium text-gray-900">Laura Sánchez</p><p class="text-xs text-gray-400">Data Analyst</p></div>
+                  </div>
+                  <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Analytics Dashboard</span>
+                </div>
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-rose-100 text-rose-700 text-xs font-bold flex items-center justify-center flex-shrink-0">SH</div>
+                    <div><p class="text-sm font-medium text-gray-900">Sofía Hernández</p><p class="text-xs text-gray-400">DevRel</p></div>
+                  </div>
+                  <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">Community Platform</span>
+                </div>
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-amber-100 text-amber-700 text-xs font-bold flex items-center justify-center flex-shrink-0">MC</div>
+                    <div><p class="text-sm font-medium text-gray-900">Marina Castro</p><p class="text-xs text-gray-400">UX Writer</p></div>
+                  </div>
+                  <span class="text-xs bg-orange-50 text-orange-700 px-2 py-0.5 rounded-full">Data Visualization</span>
+                </div>
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center flex-shrink-0">NR</div>
+                    <div><p class="text-sm font-medium text-gray-900">Natalia Romero</p><p class="text-xs text-gray-400">Frontend Dev</p></div>
+                  </div>
+                  <span class="text-xs bg-orange-50 text-orange-700 px-2 py-0.5 rounded-full">Data Visualization</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Shortlisted column -->
+            <div class="w-64 flex flex-col">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="status-dot-shortlisted w-2 h-2 rounded-full"></div>
+                  <p class="text-sm font-semibold text-gray-700">Shortlisted</p>
+                </div>
+                <span class="text-xs bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full font-medium">5</span>
+              </div>
+              <div class="flex-1 overflow-y-auto space-y-2.5">
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-amber-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-violet-100 text-violet-700 text-xs font-bold flex items-center justify-center flex-shrink-0">AG</div>
+                    <div><p class="text-sm font-medium text-gray-900">Ana García</p><p class="text-xs text-gray-400">Frontend Dev</p></div>
+                  </div>
+                  <span class="text-xs bg-violet-50 text-violet-700 px-2 py-0.5 rounded-full">AI Assistant Tool</span>
+                </div>
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-amber-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-purple-100 text-purple-700 text-xs font-bold flex items-center justify-center flex-shrink-0">IM</div>
+                    <div><p class="text-sm font-medium text-gray-900">Isabel Martínez</p><p class="text-xs text-gray-400">Backend Dev</p></div>
+                  </div>
+                  <span class="text-xs bg-violet-50 text-violet-700 px-2 py-0.5 rounded-full">AI Assistant Tool</span>
+                </div>
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-amber-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center flex-shrink-0">AR</div>
+                    <div><p class="text-sm font-medium text-gray-900">Alejandra Ruiz</p><p class="text-xs text-gray-400">Frontend Dev</p></div>
+                  </div>
+                  <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">Community Platform</span>
+                </div>
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-amber-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-pink-100 text-pink-700 text-xs font-bold flex items-center justify-center flex-shrink-0">VS</div>
+                    <div><p class="text-sm font-medium text-gray-900">Valentina Silva</p><p class="text-xs text-gray-400">Data Scientist</p></div>
+                  </div>
+                  <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Analytics Dashboard</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Matched column -->
+            <div class="w-64 flex flex-col">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="status-dot-matched w-2 h-2 rounded-full"></div>
+                  <p class="text-sm font-semibold text-gray-700">Matched</p>
+                </div>
+                <span class="text-xs bg-green-50 text-green-600 px-2 py-0.5 rounded-full font-medium">3</span>
+              </div>
+              <div class="flex-1 overflow-y-auto space-y-2.5">
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-green-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center flex-shrink-0">CR</div>
+                    <div><p class="text-sm font-medium text-gray-900">Carmen Rodríguez</p><p class="text-xs text-gray-400">Product Manager</p></div>
+                  </div>
+                  <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">Community Platform</span>
+                  <div class="flex items-center gap-1 mt-2">
+                    <span class="text-[10px] text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full">✓ Slack access granted</span>
+                  </div>
+                </div>
+                <div class="kanban-card bg-white rounded-xl p-4 shadow-sm border border-green-100">
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <div class="w-7 h-7 rounded-full bg-violet-100 text-violet-700 text-xs font-bold flex items-center justify-center flex-shrink-0">PM</div>
+                    <div><p class="text-sm font-medium text-gray-900">Patricia Moreno</p><p class="text-xs text-gray-400">Product Manager</p></div>
+                  </div>
+                  <span class="text-xs bg-violet-50 text-violet-700 px-2 py-0.5 rounded-full">AI Assistant Tool</span>
+                  <div class="flex items-center gap-1 mt-2">
+                    <span class="text-[10px] text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full">✓ Onboarding sent</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── AUTOMATED ACTIONS ───────────────────────────────────── -->
+      <div data-view="automations" class="flex-col overflow-hidden" style="display:none;flex:1">
+        <div class="bg-white border-b border-gray-100 px-8 py-5 flex-shrink-0">
+          <h1 class="text-xl font-bold text-gray-900">Automated Actions</h1>
+          <p class="text-sm text-gray-400 mt-0.5">Actions that run automatically when status changes</p>
+        </div>
+        <div class="flex-1 overflow-y-auto p-8">
+          <div class="max-w-3xl mx-auto space-y-4">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-lg flex-shrink-0">📧</div>
+                  <div>
+                    <p class="font-semibold text-gray-900">Welcome email on application</p>
+                    <p class="text-sm text-gray-400 mt-0.5">When: applicant submits form<br>Action: send personalised welcome email via Airtable</p>
+                    <p class="text-xs text-gray-400 mt-2">Triggered 28 times this month</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full font-medium">● Active</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center text-lg flex-shrink-0">💬</div>
+                  <div>
+                    <p class="font-semibold text-gray-900">Slack channel access on match</p>
+                    <p class="text-sm text-gray-400 mt-0.5">When: status → Matched<br>Action: grant access to project Slack channel + send intro message</p>
+                    <p class="text-xs text-gray-400 mt-2">Triggered 8 times this month</p>
+                  </div>
+                </div>
+                <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full font-medium">● Active</span>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center text-lg flex-shrink-0">📋</div>
+                  <div>
+                    <p class="font-semibold text-gray-900">Onboarding checklist on match</p>
+                    <p class="text-sm text-gray-400 mt-0.5">When: status → Matched<br>Action: send Notion onboarding doc + add to project Airtable view</p>
+                    <p class="text-xs text-gray-400 mt-2">Triggered 8 times this month</p>
+                  </div>
+                </div>
+                <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full font-medium">● Active</span>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center text-lg flex-shrink-0">✉️</div>
+                  <div>
+                    <p class="font-semibold text-gray-900">Rejection email with feedback</p>
+                    <p class="text-sm text-gray-400 mt-0.5">When: status → Rejected<br>Action: send personalised rejection email with encouragement to reapply</p>
+                    <p class="text-xs text-gray-400 mt-2">Triggered 5 times this month</p>
+                  </div>
+                </div>
+                <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full font-medium">● Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Create project modal -->
+  <div id="create-modal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold text-gray-900">Create new project</h2>
+        <button onclick="hideCreateProject()" class="text-gray-400 hover:text-gray-600 text-xl leading-none">×</button>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Project name</label>
+          <input type="text" placeholder="e.g. Mobile App MVP" class="w-full text-sm border border-gray-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-300" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Description</label>
+          <textarea rows="2" placeholder="What are you building and why?" class="w-full text-sm border border-gray-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-300 resize-none"></textarea>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-2">Roles needed</label>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <input type="text" placeholder="Role title" class="flex-1 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300" />
+              <input type="number" min="1" max="5" value="1" class="w-16 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 text-center" />
+              <span class="text-xs text-gray-400">slots</span>
+            </div>
+            <button class="text-xs text-violet-600 hover:underline">+ Add another role</button>
+          </div>
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button onclick="hideCreateProject()" class="flex-1 text-sm text-gray-600 border border-gray-200 rounded-xl py-2.5 hover:bg-gray-50 transition-colors">Cancel</button>
+          <button onclick="hideCreateProject()" class="flex-1 text-sm text-white rounded-xl py-2.5 font-medium btn-primary" style="background:#7c3aed">Create project</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showView(name) {
+      // Hide all views via inline style (beats Tailwind CDN specificity)
+      document.querySelectorAll('[data-view]').forEach(el => { el.style.display = 'none'; });
+      // Show target view
+      const view = document.querySelector('[data-view="' + name + '"]');
+      if (view) {
+        view.style.display = name === 'dashboard' ? 'block' : 'flex';
+        view.style.flex = '1';
+        view.style.flexDirection = 'column';
+        view.style.overflow = 'hidden';
+      }
+      // Update nav active state
+      document.querySelectorAll('[data-nav]').forEach(el => el.classList.remove('active'));
+      const nav = document.querySelector('[data-nav="' + name + '"]');
+      if (nav) nav.classList.add('active');
+    }
+
+    function shortlistApplicant(btn) {
+      const row = btn.closest('tr');
+      const badge = row.querySelector('.badge-new');
+      if (badge) {
+        badge.className = 'badge-shortlisted text-xs px-2.5 py-1 rounded-full font-medium';
+        badge.textContent = 'Shortlisted';
+      }
+      btn.textContent = 'Match →';
+      btn.className = 'text-xs text-green-700 px-3 py-1.5 rounded-lg border border-green-200 bg-green-50 hover:bg-green-100 font-medium transition-colors';
+      btn.setAttribute('onclick', 'matchApplicant(this)');
+    }
+
+    function matchApplicant(btn) {
+      const row = btn.closest('tr');
+      const badge = row.querySelector('.badge-shortlisted, .badge-new');
+      if (badge) {
+        badge.className = 'badge-matched text-xs px-2.5 py-1 rounded-full font-medium';
+        badge.textContent = 'Matched ✓';
+      }
+      const actions = btn.closest('td');
+      actions.innerHTML = '<button class="btn-secondary text-xs text-violet-700 px-3 py-1.5 rounded-lg border border-violet-200 font-medium">View</button>';
+    }
+
+    function showCreateProject() {
+      document.getElementById('create-modal').classList.remove('hidden');
+      document.getElementById('create-modal').classList.add('flex');
+    }
+
+    function hideCreateProject() {
+      document.getElementById('create-modal').classList.add('hidden');
+      document.getElementById('create-modal').classList.remove('flex');
+    }
+  </script>
+</body>
+</html>

@@ -1,34 +1,33 @@
-## Context
-
-Support and internal teams at Benevity needed answers that lived across Slack,
-Drive, and Confluence. Finding them meant searching three places or pinging a
-colleague — and the same questions came up again and again.
+import { RAGArchDiagram } from "@/components/diagrams/rag-arch";
 
 ## The problem
 
-An internal AI knowledge chatbot could answer these instantly, but only if it was
-trustworthy: grounded in the right sources, honest about where answers came from,
-and respectful of who's allowed to see what.
+Support and internal teams at Benevity spent too much time hunting for answers that already existed somewhere — buried in Confluence docs or a Slack thread from three months ago.
 
-## What I did — the product decisions
+The same questions came up again and again. Finding an answer meant either searching across multiple tools, or pinging a colleague who might not respond for hours.
 
-- **Source scoping** — decided which Slack, Drive, and Confluence sources to
-  index, balancing coverage against noise and stale content.
-- **Response & citation behaviour** — defined how the assistant should answer and
-  require citations, so users could verify rather than blindly trust.
-- **Retrieval-time access policy** — enforced permissions at retrieval, so the bot
-  never surfaced content a user wasn't entitled to see.
-- **Post-launch iteration** — used real usage to tune sources and behaviour.
+## What we built
+
+A Slack-based AI assistant connected to the internal knowledge base — available to support and CS employees directly in the tool they already lived in.
+
+It answers questions in plain language, grounded in actual company docs, with the source shown so employees can verify before acting on it.
+
+<RAGArchDiagram />
+
+## The product decisions that made it trustworthy
+
+Building the assistant was the easy part. Making it trustworthy was where the real product work happened.
+
+**Source scoping.** I decided what to index and what to leave out — Confluence pages, Slack threads, and Google Workspace docs, filtered for what was current and maintained. Not every document. A chatbot that confidently answers from a doc that's two years out of date is worse than no chatbot at all.
+
+**Access rules.** I defined two tiers — standard employees and power users — and made sure permissions were enforced at retrieval time, not just in the UI. The system checks what a user can see before fetching content, not after.
+
+**Cite everything.** Every answer required a source citation. Employees could click through and verify rather than just trust the output. This was the single decision that drove adoption — people used it because they could check it.
 
 ## Outcome
 
-- **Support tickets cut by 10%** as the assistant deflected repeat questions.
-- A reusable pattern for grounding an LLM in internal knowledge **without leaking
-  access or trust.**
+**Support employees spent 30% less time on tickets on average.** The main win wasn't deflection — it was speed. Instead of searching Confluence or pinging a colleague, they got the answer in seconds, with a link to the source.
 
-## Takeaway
+The LLM underneath started as OpenAI GPT and later migrated under a different project owner, but the decisions about sources, access, and citations stayed the same throughout.
 
-> The hard part of an AI feature isn't the model — it's the trust scaffolding:
-> citations, source scoping, and access control.
-
-That belief now carries directly into my own AI builds.
+> The hard part of an AI feature isn't the model — it's making it trustworthy. I decided what it could see, when to show it, and who could access what. That belief now carries directly into every AI build I do.

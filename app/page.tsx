@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ProjectCard } from "@/components/project-card";
+import { ToolCloud } from "@/components/ui/tool-cloud";
 
 const helps = [
   {
@@ -56,7 +57,7 @@ export default function Home() {
       </Section>
 
       {/* ── Selected work ─────────────────────────────────────────────── */}
-      <Section id="work" eyebrow="Selected work" title="Things I've shipped & built">
+      <Section id="work" eyebrow="Selected work" title="Projects & Impact">
         <div className="space-y-5">
           {featured.map((p) => (
             <Reveal key={p.slug}>
@@ -98,19 +99,11 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <Reveal delay={120} className="space-y-6">
-            {skills.map((s) => (
-              <div key={s.group}>
-                <h3 className="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent">
-                  {s.group}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {s.items.map((item) => (
-                    <Badge key={item}>{item}</Badge>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <Reveal delay={120} className="text-center lg:text-left">
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-accent">
+              Tools I work with
+            </p>
+            <ToolCloud />
           </Reveal>
         </div>
 

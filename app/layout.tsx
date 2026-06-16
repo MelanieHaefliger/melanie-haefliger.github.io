@@ -6,6 +6,7 @@ import { site } from "@/lib/site";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { CursorGlow } from "@/components/ui/cursor-glow";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,6 +78,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider attribute="class" defaultTheme="light">
+          <CursorGlow />
           <Nav />
           <main className="flex-1">{children}</main>
           <Footer />

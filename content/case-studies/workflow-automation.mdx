@@ -1,33 +1,30 @@
-## Context
+import { WorkflowArchDiagram } from "@/components/diagrams/workflow-arch";
+import { WorkflowBeforeAfter } from "@/components/diagrams/workflow-before-after";
 
-At Benevity, one of the core user workflows leaned heavily on manual operations.
-The data needed to run it was scattered across Slack, ClickUp, and Salesforce, so
-the team stitched things together by hand — slow, error-prone, and impossible to
-scale with the user base.
+## Before & after
 
-## The problem
+Every volunteering application at Benevity touched three separate tools — Slack, ClickUp, and Salesforce — and someone had to do all the connecting manually.
 
-Every request meant hunting through three tools and re-keying data. Five-minute
-tickets piled up, support and CS staff spent their days on repetitive work, and
-5,000+ users felt the friction.
+<WorkflowBeforeAfter />
 
-## What I did
+<WorkflowArchDiagram />
 
-- **Mapped every touchpoint** of the workflow end to end to find what was
-  repetitive, rule-based, and safe to automate.
-- **Defined the data-field mapping** to consolidate the scattered data into a
-  single central database — the foundation everything else depended on.
-- **Rolled out API integrations and low-code automations in phases**, automating
-  the highest-volume manual steps first, measuring, then expanding.
+## How I approached it
+
+**First, I mapped every step.** I sat with the support and CS team and documented exactly what happened from application to resolution. Eight steps. Six of them manual and repetitive.
+
+**Then I defined the data layer.** The three tools spoke different languages. I mapped which fields in Salesforce corresponded to which fields in ClickUp, and where Slack fit in. That field mapping became the foundation — without it, nothing could automate correctly.
+
+**Then we rolled it out in phases.** Starting with the highest-volume pain points: auto-create the ticket, auto-fill the fields, trigger the first email. Measured the impact. Then expanded to the monitoring and status-update layer.
+
+We phased it because we had limited engineering capacity — not every automation could go live at once, so we prioritised the highest-impact steps first.
 
 ## Outcome
 
-- **Manual workload cut by 70%** (≈40% at first release, rising with later iterations).
-- **5-minute tickets became sub-minute or fully automated actions.**
-- **~15 support and CS staff freed** for higher-value work.
-- **5,000+ users** lost a recurring source of friction.
+**Before:** each incoming request took 5–10 minutes of support time just to handle the initial ticket — create it, fill in the fields, email the right people.
 
-## Why it mattered
+**After:** ~0 minutes. Support only gets tagged in two cases: a required custom field is missing, or the user follows up after the automated response. Everything else runs without a human touching it.
 
-This is the work I love most: unglamorous workflow problems where careful mapping
-and the right automation quietly change how a whole team operates.
+**70% reduction in manual workload overall** — starting at ~40% after the first release, rising to 70% across later iterations. ~15 support and CS staff moved to higher-value work. 5,000+ users started getting faster, more consistent responses.
+
+> The thing I remember most: before automation, people spent hours just trying to find out what was happening with a request. After, the answer was always in ClickUp — because the system put it there automatically.

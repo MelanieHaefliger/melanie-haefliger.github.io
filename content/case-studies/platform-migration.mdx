@@ -1,30 +1,40 @@
-## Context
+import { MigrationGapMatrix } from "@/components/diagrams/migration-gap-matrix";
+import { MigrationRiskTiers } from "@/components/diagrams/migration-risk-tiers";
 
-Benevity was sunsetting a legacy platform and moving clients to its successor.
-Migrations like this are quietly dangerous: long-standing accounts depend on
-configurations that no one fully remembers, and a bad transition risks churn.
+## The situation
 
-## The problem
+Benevity was sunsetting a legacy platform and migrating clients to its successor. Migrations like this are quietly dangerous — long-standing accounts build on configurations nobody fully documents, and a bad transition triggers churn.
 
-30 accounts — a mix of enterprise and mid-market — were exposed. The risk wasn't
-just technical; it was the hidden, undocumented client setups that could break on
-migration and trigger cancellations. Someone had to surface them and make a call.
+20 accounts were exposed. Enterprise and mid-market clients whose setups had grown organically over years. Someone had to find out what was actually there before moving anything.
 
-## What I did
+## Discovering the gaps
 
-- **Surfaced hidden configurations** by digging into how each account actually
-  used the platform, not just how it was documented.
-- **Ran a structured Go/No-Go risk assessment**, weighing dependencies, client
-  impact, and readiness for each account.
-- **Made and communicated the call** on behalf of my function, keeping leadership
-  aligned on risks and progress throughout.
+The two platforms didn't have full feature parity. I exported raw data from both databases and compared them field by field — looking for mismatches, missing fields, and anything that would break on import. Then I walked the actual user flows on both platforms side by side to document what each could and couldn't do.
 
-## Outcome
+<MigrationGapMatrix />
 
-- **~$200K ARR retained** across the 30 affected accounts.
-- Migration risks identified **early**, before they became cancellations.
+Not every gap was equal. Some were minor. Others — like EU data hosting — were hard blockers regardless of feature parity. And some were worth fixing: features that high-revenue, high-engagement clients depended on that the new platform simply didn't have yet. Those became integration priorities.
 
-## Takeaway
+## Deciding what to build
 
-Good migration work is mostly discovery and judgment: find what's hidden, assess
-honestly, and decide with the revenue and the user in mind.
+For the gaps worth closing, I worked with the team to prioritise which features to integrate into the new platform before migration. The criteria were straightforward: accounts with the highest ARR and most active usage got priority. It wasn't about building everything — it was about protecting the accounts where a missing feature would cause churn.
+
+## The Go/No-Go assessment
+
+For each of the 20 accounts, I built a risk score: what features did they depend on, were the gaps resolved, and were there any data residency concerns. Every account landed in one of three buckets.
+
+<MigrationRiskTiers />
+
+The GDPR cases were the most critical find. Several European accounts had strict data residency requirements — and the new platform's infrastructure was US-hosted. Identifying that early meant we could have the right conversation before it became a cancellation.
+
+## Historical data migration
+
+Beyond the feature gaps, I also mapped data fields between the two systems to prepare for migrating historical records — making sure nothing was lost or mismatched in the transfer. This was the less visible part of the work but essential to a clean handover.
+
+## How it landed
+
+The CSMs used the risk assessments to lead the client conversations — presenting it as "here's what this means for your setup" rather than "we're moving you." That framing mattered.
+
+**~$500K ARR retained** across the 20 accounts. Migration risks caught before they became cancellations. And the structured Go/No-Go process gave the CS team a framework they could reuse across the full migration — not just the 20 accounts in scope.
+
+> Good migration work is mostly discovery and judgment. Find what's hidden, assess honestly, and make the call with the revenue and the user in mind — not just the technical checklist.
