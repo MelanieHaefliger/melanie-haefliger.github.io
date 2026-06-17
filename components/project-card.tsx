@@ -25,6 +25,7 @@ export function ProjectCard({
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest("a")) return;
+    window.scrollTo(0, 0);
     router.push(`/work/${project.slug}`);
   };
 
