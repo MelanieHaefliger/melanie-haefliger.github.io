@@ -22,12 +22,12 @@ export function Section({
         {(eyebrow || title) && (
           <Reveal className="mb-5 sm:mb-7">
             {eyebrow && (
-              <p className="mb-3 font-mono text-sm uppercase tracking-[0.2em] text-accent">
+              <p className="mb-3 font-mono text-sm uppercase tracking-[0.2em] text-accent text-center lg:text-left">
                 {eyebrow}
               </p>
             )}
             {title && (
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl text-center lg:text-left text-balance">
                 {title}
               </h2>
             )}

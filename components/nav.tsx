@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Container } from "@/components/ui/container";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { cn } from "@/lib/utils";
+import { cn, asset } from "@/lib/utils";
 
 const links = [
   { href: "/#work", label: "Work" },
@@ -14,6 +14,29 @@ const links = [
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  const scrollTo = useCallback(
+    (e: React.MouseEvent, hash: string) => {
+      const el = document.getElementById(hash);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth" });
+        history.replaceState(null, "", `#${hash}`);
+      }
+    },
+    [],
+  );
+
+  const handleLogoClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (pathname === "/") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    },
+    [pathname],
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -23,37 +46,47 @@ export function Nav() {
   }, []);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 border-b transition-colors duration-300",
-        scrolled
-          ? "border-border bg-background/80 backdrop-blur-md"
-          : "border-transparent bg-transparent",
-      )}
-    >
-      <Container className="flex h-16 items-center justify-between">
+    <header className="fixed inset-x-0 top-3 z-50 flex justify-center pointer-events-none transition-all duration-300">
+      <div
+        className={cn(
+          "pointer-events-auto mx-3 flex w-full items-center justify-between gap-2 rounded-2xl border bg-background/80 px-3 py-1.5 shadow-lg backdrop-blur-md transition-all duration-300 sm:mx-8 sm:gap-3 sm:px-4 sm:py-2 lg:mx-12",
+          "border-border/40",
+          scrolled ? "border-border/60 shadow-black/10 dark:shadow-black/30" : "shadow-black/5",
+        )}
+      >
         <Link
           href="/"
-          className="font-mono text-sm font-semibold tracking-tight text-foreground transition-colors hover:text-accent"
+          onClick={handleLogoClick}
+          className="shrink-0 rounded-md transition-transform active:scale-90"
         >
-          MH<span className="text-accent">.</span>
+          <img
+            src={asset("/android-chrome-192x192.png")}
+            alt="Melanie Haefliger"
+            width={28}
+            height={28}
+            className="rounded-md"
+          />
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-2">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="rounded-md px-3 py-2 text-sm text-muted transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </a>
-          ))}
-          <span className="ml-1">
+        <nav className="flex items-center gap-0.5 sm:gap-1">
+          {links.map((link) => {
+            const hash = link.href.split("#")[1];
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => scrollTo(e, hash)}
+                className="rounded-md px-2 py-1 text-xs text-muted transition-colors hover:text-foreground sm:px-2.5 sm:py-1.5 sm:text-sm"
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+          <span className="ml-0.5 sm:ml-1">
             <ThemeToggle />
           </span>
         </nav>
-      </Container>
+      </div>
     </header>
   );
 }

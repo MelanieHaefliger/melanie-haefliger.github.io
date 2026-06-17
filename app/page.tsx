@@ -13,7 +13,7 @@ const helps = [
   {
     icon: Workflow,
     title: "Automate workflows & free up your team",
-    body: "I map messy, manual processes and replace them with automations and integrations that free up whole teams.",
+    body: "I map messy, manual processes and replace them with automations that reduce manual work.",
   },
   {
     icon: TrendingUp,
@@ -23,7 +23,7 @@ const helps = [
   {
     icon: Zap,
     title: "Streamline ops to save cost & time",
-    body: "I find where time and money leak, then design the simplest change that fixes it — measured, not assumed.",
+    body: "I help teams work faster. I find what's slowing them down and fix it.",
   },
 ];
 import { projects } from "@/content/projects";
@@ -44,8 +44,8 @@ export default function Home() {
         <div className="grid gap-5 sm:grid-cols-3">
           {helps.map((h, i) => (
             <Reveal key={h.title} delay={i * 80}>
-              <Card className="h-full">
-                <h.icon className="mb-4 h-6 w-6 text-accent" />
+              <Card className="h-full text-center lg:text-left">
+                <h.icon className="mx-auto mb-4 h-6 w-6 text-accent lg:mx-0" />
                 <h3 className="mb-2 min-h-[3.5rem] text-lg font-semibold tracking-tight text-foreground sm:min-h-[3rem]">
                   {h.title}
                 </h3>
@@ -77,7 +77,7 @@ export default function Home() {
       {/* ── About / experience ────────────────────────────────────────── */}
       <Section id="about" eyebrow="About" title="I build products that reduce friction, drive engagement, and scale" className="bg-subtle/40">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal className="space-y-5 text-lg leading-8 text-muted">
+          <Reveal className="space-y-5 text-lg leading-8 text-muted text-center lg:text-left">
             <p>
               I&apos;m a Product Owner and AI-native builder with 6+ years in
               hypergrowth SaaS — across CSR and engagement tech at Benevity and
@@ -89,7 +89,7 @@ export default function Home() {
               I work best with autonomy and trust — given space, I take full ownership from problem to outcome. In a team I&apos;m the person who keeps an eye on the bigger picture, brings conversations back on track when they drift, and says something early if I sense something is off. I care about the environment as much as the output: respectful, honest, and occasionally fun.
             </p>
 
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="flex flex-wrap gap-3 pt-2 justify-center lg:justify-start">
               <Button href={asset(site.cv)} external variant="secondary" size="sm">
                 <FileDown className="h-4 w-4" /> Download CV
               </Button>
@@ -147,12 +147,12 @@ export default function Home() {
 
       {/* ── Contact ───────────────────────────────────────────────────── */}
       <Section id="contact" eyebrow="Contact" title="Let's chat">
-        <Reveal className="max-w-2xl">
-          <p className="text-lg leading-8 text-muted">
+        <Reveal className="max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
+          <p className="text-lg leading-8 text-muted text-balance">
             I&apos;m open to AI product roles and interesting conversations. The
             fastest way to reach me is email or LinkedIn — I read everything.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
             <Button href={site.links.email}>
               <Mail className="h-4 w-4" /> {site.email}
             </Button>

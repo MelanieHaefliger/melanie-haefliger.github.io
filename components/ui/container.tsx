@@ -5,7 +5,7 @@ import type { ComponentProps } from "react";
 export function Container({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
-      className={cn("mx-auto w-full max-w-5xl px-6 sm:px-8", className)}
+      className={cn("mx-auto w-full px-4 sm:px-8 lg:px-48 xl:px-72", className)}
       {...props}
     />
   );
