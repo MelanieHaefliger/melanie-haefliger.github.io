@@ -41,7 +41,7 @@ export function ToolCloud() {
   const reduced = useReducedMotion();
 
   return (
-    <div className="flex flex-wrap gap-3 pb-6">
+    <div className="flex flex-wrap justify-center gap-3 pb-6 lg:justify-start">
       {TOOLS.map((tool, i) => {
         const { yOff, amp, dur, del } = FLOAT[i];
         return (

@@ -1,7 +1,3 @@
-"use client";
-
-import { useRef } from "react";
-import { useScroll, useTransform, motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -11,24 +7,13 @@ import { StatusBadge } from "@/components/status-badge";
 import { AnimatedHeadline } from "@/components/ui/animated-headline";
 
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const blobY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const gradY = useTransform(scrollYProgress, [0, 1], [0, -40]);
-
   return (
-    <section ref={ref} className="relative overflow-hidden">
-      {/* Warm gradient wash + soft coral glow. */}
-      <motion.div
-        aria-hidden
-        style={{ y: gradY }}
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-accent/[0.08] via-transparent to-transparent"
-      />
-      <motion.div
-        aria-hidden
-        style={{ y: blobY }}
-        className="pointer-events-none absolute -top-32 left-1/3 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-accent/15 blur-3xl"
-      />
+    <section className="relative">
+      {/* Background blobs — overflow-hidden here only, never clips content */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden -z-10" aria-hidden>
+        <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.08] via-transparent to-transparent" />
+        <div className="absolute -top-32 left-1/3 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-accent/15 blur-3xl" />
+      </div>
       <Container className="relative pt-24 sm:pt-24 lg:pt-20 pb-0">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
           <div className="min-w-0 flex-1 flex flex-col text-center items-center lg:text-left lg:items-start">
@@ -70,16 +55,14 @@ export function Hero() {
               </p>
             </Reveal>
 
-            <Reveal delay={300}>
-              <div className="mt-8 flex flex-nowrap items-center gap-3">
-                <Button href="/#work">
-                  See my work <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button href="/#contact" variant="secondary">
-                  Let&apos;s chat <ArrowUpRight className="h-4 w-4" />
-                </Button>
-              </div>
-            </Reveal>
+            <div className="mt-8 flex flex-nowrap items-center gap-3">
+              <Button href="/#work">
+                See my work <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button href="/#contact" variant="secondary">
+                Let&apos;s chat <ArrowUpRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
 
           <Reveal delay={180} className="flex flex-col items-center gap-4">
