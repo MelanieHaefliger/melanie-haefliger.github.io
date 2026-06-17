@@ -73,7 +73,7 @@ export function ProjectCard({
       </div>
 
       {project.metrics.length > 0 && (
-        <dl className="mt-6 grid grid-cols-3 gap-4 border-t border-border pt-5">
+        <dl className="mt-6 grid grid-cols-3 grid-rows-[auto_auto] gap-x-4 gap-y-1 border-t border-border pt-5">
           {project.metrics.slice(0, 3).map((m) => (
             <AnimatedMetric
               key={m.label}

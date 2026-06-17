@@ -48,7 +48,7 @@ export const projects: Project[] = [
       "Mapped every step of a manual process across three disconnected tools, built the data layer that connected them, and shipped API integrations and automations in phases.",
     tags: ["Automation", "API integrations", "Low-code", "B2B2C SaaS"],
     metrics: [
-      { label: "Per ticket (was 5–10 min)", value: "→ ~0 min" },
+      { label: "Per ticket\n(was 5–10 min)", value: "→ ~0 min" },
       { label: "Manual workload", value: "−70%" },
       { label: "Users impacted", value: "5,000+" },
     ],

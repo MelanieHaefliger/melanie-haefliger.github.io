@@ -59,8 +59,8 @@ export function AnimatedMetric({ value, label, href }: { value: string; label: s
   );
 
   return (
-    <div ref={ref}>
-      <dt className="text-xs text-muted">{label}</dt>
+    <div ref={ref} className="row-span-2 grid grid-rows-subgrid gap-0">
+      <dt className="whitespace-pre-line text-xs text-muted">{label}</dt>
       {href ? (
         /* stopPropagation so the card <Link> wrapper doesn't fire */
         <a href={href} target="_blank" rel="noopener noreferrer"

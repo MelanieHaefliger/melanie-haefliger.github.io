@@ -56,10 +56,10 @@ export function Hero() {
             </Reveal>
 
             <div className="mt-8 flex flex-nowrap items-center gap-3">
-              <Button href="/#work">
+              <Button href="#work">
                 See my work <ArrowRight className="h-4 w-4" />
               </Button>
-              <Button href="/#contact" variant="secondary">
+              <Button href="#contact" variant="secondary">
                 Let&apos;s chat <ArrowUpRight className="h-4 w-4" />
               </Button>
             </div>
