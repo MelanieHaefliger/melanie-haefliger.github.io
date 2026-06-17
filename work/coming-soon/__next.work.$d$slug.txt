@@ -2,4 +2,4 @@
 2:I[39756,["/melanie-haefliger.github.io/_next/static/chunks/2464ejhen5dg7.js","/melanie-haefliger.github.io/_next/static/chunks/10uf__uj98ibf.js","/melanie-haefliger.github.io/_next/static/chunks/1vqqv1rgwc84i.js","/melanie-haefliger.github.io/_next/static/chunks/14mrh2-p_w84d.js"],"default"]
 3:I[37457,["/melanie-haefliger.github.io/_next/static/chunks/2464ejhen5dg7.js","/melanie-haefliger.github.io/_next/static/chunks/10uf__uj98ibf.js","/melanie-haefliger.github.io/_next/static/chunks/1vqqv1rgwc84i.js","/melanie-haefliger.github.io/_next/static/chunks/14mrh2-p_w84d.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"2P3XuB26qnMjYOkC-UKEM"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"tatW8Cv83ASiyxc9S8qSj"}
