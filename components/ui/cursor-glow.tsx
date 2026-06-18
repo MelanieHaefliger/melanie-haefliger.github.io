@@ -25,7 +25,7 @@ export function CursorGlow() {
       className="pointer-events-none fixed inset-0 z-30 hidden overflow-hidden md:block"
     >
       <motion.div
-        className="absolute h-[600px] w-[600px] rounded-full"
+        className="absolute h-[150px] w-[150px] rounded-full"
         style={{
           x,
           y,

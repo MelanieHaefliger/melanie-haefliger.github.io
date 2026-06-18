@@ -1,28 +1,33 @@
 "use client";
 
-import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import type { IconType } from "react-icons";
+import {
+  SiSlack, SiFigma, SiConfluence, SiSalesforce, SiClickup, SiMixpanel,
+  SiJira, SiNotion, SiZendesk, SiOpenai, SiLooker, SiPostgresql,
+  SiAsana, SiGoogledrive, SiAnthropic,
+} from "react-icons/si";
 
-type Tool = { label: string; initial: string; bg: string; slug?: string };
+type Tool = { label: string; bg: string; icon?: IconType; initial?: string };
 
 const TOOLS: Tool[] = [
-  { label: "Slack",             initial: "S",   bg: "#4A154B", slug: "slack" },
-  { label: "Figma",             initial: "F",   bg: "#C2410C", slug: "figma" },
-  { label: "Confluence",        initial: "C",   bg: "#0052CC", slug: "confluence" },
-  { label: "Salesforce",        initial: "SF",  bg: "#0176D3", slug: "salesforce" },
-  { label: "ClickUp",           initial: "CU",  bg: "#7C3AED", slug: "clickup" },
-  { label: "Mixpanel",          initial: "M",   bg: "#7856FF", slug: "mixpanel" },
-  { label: "Workato",           initial: "W",   bg: "#6366F1" },
-  { label: "Jira",              initial: "Ji",  bg: "#0747A6", slug: "jira" },
-  { label: "Notion",            initial: "No",  bg: "#5c5c5c", slug: "notion" },
-  { label: "Zendesk",           initial: "Z",   bg: "#03363D", slug: "zendesk" },
-  { label: "OpenAI",            initial: "AI",  bg: "#10A37F", slug: "openai" },
-  { label: "Looker",            initial: "Lo",  bg: "#1967D2", slug: "looker" },
-  { label: "SQL",               initial: "SQ",  bg: "#336791", slug: "postgresql" },
-  { label: "Asana",             initial: "As",  bg: "#F06A6A", slug: "asana" },
-  { label: "Google Workspace",  initial: "GW",  bg: "#4285F4", slug: "googleworkspace" },
-  { label: "Claude",            initial: "Cl",  bg: "#D97757", slug: "anthropic" },
-  { label: "Openclaw",          initial: "OC",  bg: "#0e7490" },
+  { label: "Slack",            bg: "#4A154B", icon: SiSlack },
+  { label: "Figma",            bg: "#C2410C", icon: SiFigma },
+  { label: "Confluence",       bg: "#0052CC", icon: SiConfluence },
+  { label: "Salesforce",       bg: "#0176D3", icon: SiSalesforce },
+  { label: "ClickUp",          bg: "#7C3AED", icon: SiClickup },
+  { label: "Mixpanel",         bg: "#7856FF", icon: SiMixpanel },
+  { label: "Workato",          bg: "#6366F1", initial: "W" },
+  { label: "Jira",             bg: "#0747A6", icon: SiJira },
+  { label: "Notion",           bg: "#5c5c5c", icon: SiNotion },
+  { label: "Zendesk",          bg: "#03363D", icon: SiZendesk },
+  { label: "OpenAI",           bg: "#10A37F", icon: SiOpenai },
+  { label: "Looker",           bg: "#1967D2", icon: SiLooker },
+  { label: "SQL",              bg: "#336791", icon: SiPostgresql },
+  { label: "Asana",            bg: "#F06A6A", icon: SiAsana },
+  { label: "Google Workspace", bg: "#4285F4", icon: SiGoogledrive },
+  { label: "Claude",           bg: "#D97757", icon: SiAnthropic },
+  { label: "Openclaw",         bg: "#0e7490", initial: "OC" },
 ];
 
 const FLOAT: { yOff: number; amp: number; dur: number; del: number }[] = [
@@ -45,25 +50,13 @@ const FLOAT: { yOff: number; amp: number; dur: number; del: number }[] = [
   { yOff: 4,  amp: 6,  dur: 3.0, del: 0.6 },
 ];
 
-function ToolIcon({ slug, initial, bg }: { slug?: string; initial: string; bg: string }) {
-  const [imgLoaded, setImgLoaded] = useState(false);
+function ToolIcon({ icon: Icon, initial, bg }: { icon?: IconType; initial?: string; bg: string }) {
   return (
     <span
       className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-[9px] font-bold text-white"
       style={{ backgroundColor: bg }}
     >
-      {slug && (
-        <img
-          src={`https://cdn.simpleicons.org/${slug}/ffffff`}
-          alt=""
-          aria-hidden
-          width={14}
-          height={14}
-          onLoad={() => setImgLoaded(true)}
-          className={imgLoaded ? "block" : "hidden"}
-        />
-      )}
-      {!imgLoaded && initial}
+      {Icon ? <Icon size={14} color="#ffffff" aria-hidden /> : initial}
     </span>
   );
 }
@@ -85,7 +78,7 @@ export function ToolCloud() {
             className="flex cursor-default select-none items-center gap-2 rounded-full border bg-card px-3 py-1.5"
             title={tool.label}
           >
-            <ToolIcon slug={tool.slug} initial={tool.initial} bg={tool.bg} />
+            <ToolIcon icon={tool.icon} initial={tool.initial} bg={tool.bg} />
             <span className="text-sm font-medium text-foreground">{tool.label}</span>
           </motion.div>
         );

@@ -68,7 +68,7 @@ export const projects: Project[] = [
     role: "Product Owner · Benevity",
     period: "2023 — 2024",
     summary:
-      "Led the product side of an internal AI assistant: a Slack bot for internal Q&A and a Zendesk integration that surfaced suggested answers inside open tickets. I owned source scoping, citation rules, and access control.",
+      "I contributed to the delivery of an internal AI assistant: a Slack bot for internal Q&A and a Zendesk integration that surfaced suggested answers inside open tickets. I owned source scoping, citation rules, and access control.",
     tags: ["AI / LLM", "RAG", "Access control", "Internal tooling"],
     metrics: [
       { label: "Time on tickets", value: "−30%" },
