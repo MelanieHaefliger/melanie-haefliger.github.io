@@ -19,7 +19,7 @@ export const experience: Role[] = [
     company: "Benevity",
     companyUrl: "https://benevity.com/",
     title: "Product Owner",
-    period: "Oct 2022 — Present",
+    period: "Oct 2022 — Feb 2026",
     context: "CSR & engagement tech · B2B2C SaaS",
     remote: true,
     highlights: [
