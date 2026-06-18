@@ -12,7 +12,7 @@ const TOOLS: Tool[] = [
   { label: "Salesforce",        initial: "SF",  bg: "#0176D3", slug: "salesforce" },
   { label: "ClickUp",           initial: "CU",  bg: "#7C3AED", slug: "clickup" },
   { label: "Mixpanel",          initial: "M",   bg: "#7856FF", slug: "mixpanel" },
-  { label: "Workato",           initial: "W",   bg: "#6366F1", slug: "workato" },
+  { label: "Workato",           initial: "W",   bg: "#6366F1" },
   { label: "Jira",              initial: "Ji",  bg: "#0747A6", slug: "jira" },
   { label: "Notion",            initial: "No",  bg: "#5c5c5c", slug: "notion" },
   { label: "Zendesk",           initial: "Z",   bg: "#03363D", slug: "zendesk" },
@@ -46,24 +46,24 @@ const FLOAT: { yOff: number; amp: number; dur: number; del: number }[] = [
 ];
 
 function ToolIcon({ slug, initial, bg }: { slug?: string; initial: string; bg: string }) {
-  const [failed, setFailed] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
   return (
     <span
       className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-[9px] font-bold text-white"
       style={{ backgroundColor: bg }}
     >
-      {slug && !failed ? (
+      {slug && (
         <img
           src={`https://cdn.simpleicons.org/${slug}/ffffff`}
           alt=""
           aria-hidden
           width={14}
           height={14}
-          onError={() => setFailed(true)}
+          onLoad={() => setImgLoaded(true)}
+          className={imgLoaded ? "block" : "hidden"}
         />
-      ) : (
-        initial
       )}
+      {!imgLoaded && initial}
     </span>
   );
 }
