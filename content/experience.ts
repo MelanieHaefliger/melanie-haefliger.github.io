@@ -24,7 +24,7 @@ export const experience: Role[] = [
     remote: true,
     highlights: [
       "Automated a core user workflow end to end — consolidating data from Slack, ClickUp, and Salesforce — cutting manual workload by 70% and freeing ~15 support and CS staff.",
-      "Owned the product side of an internal AI knowledge chatbot (source scoping, citation behaviour, retrieval-time access policy), cutting support tickets by 10%.",
+      "Contributed to the development of an internal AI knowledge chatbot (source scoping, citation behaviour, retrieval-time access policy), cutting support tickets by 10%.",
       "Shipped an AI image-recognition feature that replaced manual data entry, and wrote the specs for its validation logic.",
       "Retained ~$200K ARR across 30 accounts during a legacy platform sunset via a structured Go/No-Go risk assessment.",
     ],
